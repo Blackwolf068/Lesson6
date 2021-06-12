@@ -4,6 +4,7 @@ import Lesson7.awesome_project.GlobalState;
 import Lesson7.awesome_project.controller.IWeatherController;
 import Lesson7.awesome_project.controller.WeatherController;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserInterface implements IUserInterface {
@@ -11,7 +12,7 @@ public class UserInterface implements IUserInterface {
     private IWeatherController controller = new WeatherController();
 
     @Override
-    public void showUI() {
+    public void showUI() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Введи название города или exit для выхода");
@@ -20,7 +21,7 @@ public class UserInterface implements IUserInterface {
             checkIsExit(userInput);
             GlobalState.getInstance().setSelectedCity(userInput);
 
-            System.out.println("Введите команду: \n1. - погода на 1 день\n2. - погода на 5 дней");
+            System.out.println("Введите команду: \n1. - погода на 1 день\n2. - погода на 5 дней\n3. - вывод всех запрошенных даных");
             String command = scanner.nextLine();
 
             try {
@@ -33,7 +34,6 @@ public class UserInterface implements IUserInterface {
 
             controller.onUserInput(Integer.parseInt(command));
         }
-
     }
 
     private void checkIsExit(String input) {
